@@ -9,7 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "xan": "file:/home/jcfisher007/xan",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "xan": "^0.17.0",
     "xander": "^0.8.2"
   }
 }

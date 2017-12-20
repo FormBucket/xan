@@ -3,13 +3,13 @@ var webpack = require('webpack');
 var {version, vendor} = require( path.join(process.cwd(), 'package.json'))
 var fs = require('fs')
 var serverDir = path.dirname(fs.realpathSync(__filename))
-let load = (module) => [ path.join(process.cwd(), 'app', module) ]
+let load = (module) => [ path.join(process.cwd(), module) ]
 
 module.exports = {
   devtool: 'source-map',
   entry: {
     vendor: vendor || ["react", "react-dom"],
-    app: load('index')
+    app: load('app')
   },
   output: {
     path: path.join(process.cwd(), 'public', 'js'),

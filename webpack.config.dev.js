@@ -4,7 +4,7 @@ var fs = require('fs')
 
 var serverDir = path.dirname(fs.realpathSync(__filename))
 
-let load = (module) => [ __dirname + '/node_modules/webpack-hot-middleware/client', './app/' + module]
+let load = (module) => [ path.join(process.cwd(), module) ]
 
 console.log('configure webpack', serverDir)
 
@@ -12,7 +12,7 @@ module.exports = {
   devtool: 'eval',
   entry:  {
     vendor: ["react", "react-dom"],
-    app: load('index')
+    app: load('app')
   },
   output: {
     path: path.join(serverDir, 'js'),
@@ -28,7 +28,8 @@ module.exports = {
     loaders: [{
       test: /\.js$/,
       loaders: ['babel-loader'],
-      include: [path.join(process.cwd(), 'app'), path.join(process.cwd(), 'pages')]
+      include: [process.cwd()],
+      exclude: [path.join(process.cwd(), 'node_modules')]
     }, {
       test: /\.json$/,
       loader: 'json-loader'
