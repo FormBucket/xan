@@ -36,7 +36,7 @@ module.exports = {
     loaders: [{
       test: /\.js$/,
       loaders: ['babel-loader'],
-      include: [path.join(process.cwd(), 'app'), path.join(process.cwd(), 'pages')]
+      include: [path.join(process.cwd()), path.join(process.cwd(), 'pages')]
     }, {
       test: /\.json$/,
       loader: 'json-loader'
