@@ -1,13 +1,12 @@
 var path = require('path');
 var webpack = require('webpack');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var fs = require('fs')
 
 var serverDir = path.dirname(fs.realpathSync(__filename))
 
 let load = (module) => [ __dirname + '/node_modules/webpack-hot-middleware/client', './app/' + module]
 
-console.log(serverDir)
+console.log('configure webpack', serverDir)
 
 module.exports = {
   devtool: 'eval',
@@ -16,32 +15,26 @@ module.exports = {
     app: load('index')
   },
   output: {
-    path: path.join(serverDir, 'dist'),
+    path: path.join(serverDir, 'js'),
     filename: '[name].js',
-    publicPath: '/dist/'
-  },
-  resolveLoader: {
-    root: path.join(serverDir, 'node_modules')
+    publicPath: '/js/'
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor", /* filename= */"vendor.bundle.js"),
+    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.bundle.js' }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin()
   ],
   module: {
     loaders: [{
       test: /\.js$/,
-      loaders: ['babel'],
+      loaders: ['babel-loader'],
       include: [path.join(process.cwd(), 'app'), path.join(process.cwd(), 'pages')]
     }, {
-      test: /\.(css|scss|sass)$/,
-      loaders: ['style', 'css', 'sass']
-    }, {
       test: /\.json$/,
-      loader: 'json'
+      loader: 'json-loader'
     }, {
         test: /\.md$/,
-        loader: 'raw'
+        loader: 'raw-loader'
     }]
   }
 };

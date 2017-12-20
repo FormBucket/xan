@@ -1,14 +1,14 @@
 {
-  "name": "whq",
-  "version": "0.10.0",
-  "description": "Build tool bullshit for single page apps",
-  "main": "devServer.js",
+  "name": "xan",
+  "version": "0.11.0",
+  "description": "Build tool for xander.",
+  "main": "index.js",
   "scripts": {
     "lint": "eslint src"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/WebsiteHQ/whq.git"
+    "url": "git+https://github.com/formula/xan.git"
   },
   "keywords": [
     "react",
@@ -23,31 +23,25 @@
     "babel",
     "react-transform"
   ],
-  "author": "Peter W Moresi <peter@websitehq.com> (http://github.com/WebsiteHQ)",
+  "author": "JC Fisher <jcfisher007@gmail.com>",
   "license": "MIT",
   "bin": {
-    "whq": "./index.js"
+    "xan": "./index.js"
   },
   "bugs": {
-    "url": "https://github.com/WebsiteHQ/whq/issues"
+    "url": "https://github.com/formula/xan/issues"
   },
-  "homepage": "https://github.com/WebsiteHQ/whq",
+  "homepage": "https://github.com/formula/xan",
   "dependencies": {
-    "babel-core": "^6.14.0",
-    "babel-eslint": "^5.0.4",
-    "babel-loader": "^6.2.5",
-    "babel-preset-es2015": "^6.3.13",
-    "babel-preset-stage-0": "^6.16.0",
-    "cross-env": "^1.0.7",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^6.3.2",
+    "babel-preset-env": "^1.6.1",
     "css-loader": "^0.23.0",
-    "eslint": "^1.10.3",
-    "eslint-plugin-babel": "^3.0.0",
-    "eslint-plugin-react": "^3.11.3",
-    "extract-text-webpack-plugin": "^0.9.1",
     "handlebars": "^4.0.5",
     "highlight.js": "^9.6.0",
-    "json-loader": "^0.5.4",
-    "koa": "^1.2.1",
+    "json-loader": "^0.5.7",
+    "koa": "^1.4.1",
     "koa-accesslog": "0.0.2",
     "koa-front-matter-views": "^2.0.6",
     "koa-route": "^2.4.2",
@@ -61,16 +55,17 @@
     "metalsmith-markdown": "^0.2.1",
     "metalsmith-permalinks": "^0.5.0",
     "metalsmith-remarkable": "git+https://github.com/mulyoved/metalsmith-remarkable.git",
-    "node-sass": "^3.7.0",
+    "node-sass": "^4.7.2",
     "raw-loader": "^0.5.1",
-    "react": "^15.3.2",
-    "react-dom": "^15.3.2",
-    "react-hot-loader": "^3.0.0-beta.6",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-hot-loader": "^3.1.3",
     "rimraf": "^2.4.3",
-    "sass-loader": "^3.1.2",
-    "style-loader": "^0.13.0",
+    "sass-loader": "^6.0.6",
+    "style-loader": "^0.19.1",
     "tape": "^4.6.0",
-    "webpack": "^1.13.2",
-    "webpack-hot-middleware": "^2.12.2"
+    "webpack": "^3.10.0",
+    "webpack-dev-middleware": "^2.0.2",
+    "webpack-hot-middleware": "^2.21.0"
   }
 }

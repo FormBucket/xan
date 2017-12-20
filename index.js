@@ -2,23 +2,36 @@
 var program = require('commander');
 
 var exec = require('child_process').exec;
-var cmd = 'prince -v builds/pdf/book.html -o builds/pdf/book.pdf';
-
 
 program
   .version(require('./package.json').version)
 
+// Run Server Command
+// usage: xan new :name 
 program
-  .command('start')
+    .command('new [name]')
+    .description('Create new app')
+    .version(require('./package.json').version)
+    .action(function(name) {
+        console.log("TBD:" + name);
+    });
+
+
+// Run Server Command
+// usage: xan server
+program
+  .command('server')
   .description('run server')
   .action(function() {
     require('./devServer')
   });
 
+// Build static site command
+// usage: xan build
 program
   .command('build')
   .description('build the public folder')
-  .action(function(cmd) {
+  .action(function() {
 
     var s = new Date()
 

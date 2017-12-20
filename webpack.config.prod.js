@@ -1,23 +1,20 @@
 var path = require('path');
 var webpack = require('webpack');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var {version, vendor} = require( path.join(process.cwd(), 'package.json'))
 var fs = require('fs')
 var serverDir = path.dirname(fs.realpathSync(__filename))
 let load = (module) => [ path.join(process.cwd(), 'app', module) ]
 
 module.exports = {
+  devtool: 'source-map',
   entry: {
     vendor: vendor || ["react", "react-dom"],
     app: load('index')
   },
   output: {
-    path: path.join(process.cwd(), 'public', 'dist'),
-    publicPath: '/dist/',
+    path: path.join(process.cwd(), 'public', 'js'),
     filename: '[name].js',
-  },
-  resolveLoader: {
-    root: path.join(serverDir, 'node_modules')
+    publicPath: '/js/'
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -25,15 +22,12 @@ module.exports = {
         'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
       }
     }),
-    new webpack.optimize.CommonsChunkPlugin(/* chunkName= */"vendor", /* filename= */"vendor.bundle.js"),
-    new webpack.optimize.OccurenceOrderPlugin(),
-    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.bundle.js' }),
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
         warnings: false
       }
-   }),
-   new ExtractTextPlugin('app.css')
+    })
   ],
   node: {
     Buffer: false
@@ -41,20 +35,15 @@ module.exports = {
   module: {
     loaders: [{
       test: /\.js$/,
-      loaders: ['babel'],
+      loaders: ['babel-loader'],
       include: [path.join(process.cwd(), 'app'), path.join(process.cwd(), 'pages')]
     }, {
-      test: /\.(css|scss|sass)$/,
-      loader: ExtractTextPlugin.extract(
-        "style",
-        "css!sass"
-      )
-    }, {
       test: /\.json$/,
-      loader: 'json'
+      loader: 'json-loader'
     }, {
       test: /\.md$/,
-      loader: 'raw'
+      loader: 'raw-loader'
     }]
   }
+
 };

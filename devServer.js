@@ -9,6 +9,7 @@ var accesslog = require('koa-accesslog');
 var _ = require('koa-route');
 var moment = require('moment')
 var codeGeneration = require('./codeGen')
+
 codeGeneration()
 
 app.use(accesslog());
@@ -19,6 +20,7 @@ var compiler = webpack(webpackConfig);
 var hotMiddleware = require("webpack-hot-middleware")(compiler);
 
 var webpackMiddleware = require("koa-webpack-dev-middleware");
+
 app.use(webpackMiddleware(compiler, {
   noInfo: false,
   lazy: false,
@@ -47,4 +49,5 @@ app.use(function *(){
   yield this.serveView('index')
 })
 
-app.listen(3000);
+app.listen(process.env.PORT||3000, process.env.BIND_IP);
+console.log(`Listening on ${process.env.BIND_IP||'localhost'}:${process.env.PORT||3000}`)
