@@ -4,13 +4,8 @@ var koa = require('koa');
 var app = koa();
 var serveViews = require('koa-front-matter-views');
 var serve = require('koa-static');
-var send = require('koa-send');
 var accesslog = require('koa-accesslog');
-var _ = require('koa-route');
 var moment = require('moment')
-var codeGeneration = require('./codeGen')
-
-codeGeneration()
 
 app.use(accesslog());
 
