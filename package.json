@@ -1,6 +1,6 @@
 {
   "name": "xan",
-  "version": "0.11.0",
+  "version": "0.13.0",
   "description": "Build tool for xander.",
   "main": "index.js",
   "scripts": {
@@ -45,7 +45,6 @@
     "koa-accesslog": "0.0.2",
     "koa-front-matter-views": "^2.0.6",
     "koa-route": "^2.4.2",
-    "koa-sass": "^1.0.1",
     "koa-send": "^3.2.0",
     "koa-static": "^2.0.0",
     "koa-webpack-dev-middleware": "^1.2.2",
@@ -55,7 +54,6 @@
     "metalsmith-markdown": "^0.2.1",
     "metalsmith-permalinks": "^0.5.0",
     "metalsmith-remarkable": "git+https://github.com/mulyoved/metalsmith-remarkable.git",
-    "node-sass": "^4.7.2",
     "raw-loader": "^0.5.1",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
