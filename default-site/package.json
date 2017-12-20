@@ -1,5 +1,5 @@
 {
-  "name": "xan-example",
+  "name": "{{name}}",
   "version": "0.0.1",
   "description": "Can it work?",
   "main": "index.js",
@@ -11,7 +11,7 @@
   "dependencies": {
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "xan": "^0.17.0",
+    "xan": "^0.20.0",
     "xander": "^0.8.2"
   }
 }

@@ -13,7 +13,8 @@ program
     .description('Create new app')
     .version(require('./package.json').version)
     .action(function(name) {
-        console.log("TBD:" + name);
+      var createSite = require('./createNewSite')
+      createSite({name})
     });
 
 
@@ -47,7 +48,7 @@ program
     });
 
     console.log('Metalsmith start')
-    exec(`node ${__dirname}/runMetalSmith`, function(error, stdout, stderr) {
+    exec(`node ${__dirname}/createStaticPages`, function(error, stdout, stderr) {
       if (error) {
         console.log('Metalsmith error:', error)
       }

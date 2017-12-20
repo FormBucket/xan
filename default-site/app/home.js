@@ -1,5 +1,8 @@
 import React from 'react'
 
 export default () => (
-  <div>Hello, Xan</div>
+  <div>
+    Hello, Xan
+    <img src="/img/xan.jpg" />
+  </div>
 )
