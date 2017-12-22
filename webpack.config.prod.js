@@ -1,28 +1,31 @@
-var path = require('path');
-var webpack = require('webpack');
-var {version, vendor} = require( path.join(process.cwd(), 'package.json'))
-var fs = require('fs')
-var serverDir = path.dirname(fs.realpathSync(__filename))
-let load = (module) => [ path.join(process.cwd(), module) ]
+var path = require("path");
+var webpack = require("webpack");
+var { version, vendor } = require(path.join(process.cwd(), "package.json"));
+var fs = require("fs");
+var serverDir = path.dirname(fs.realpathSync(__filename));
+let load = module => [path.join(process.cwd(), "js", module)];
 
 module.exports = {
-  devtool: 'source-map',
+  devtool: "source-map",
   entry: {
     vendor: vendor || ["react", "react-dom"],
-    app: load('app')
+    app: load("app")
   },
   output: {
-    path: path.join(process.cwd(), 'public', 'js'),
-    filename: '[name].js',
-    publicPath: '/js/'
+    path: path.join(process.cwd(), "public", "js"),
+    filename: "[name].js",
+    publicPath: "/js/"
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+      "process.env": {
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
       }
     }),
-    new webpack.optimize.CommonsChunkPlugin({ name: 'vendor', filename: 'vendor.bundle.js' }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: "vendor",
+      filename: "vendor.bundle.js"
+    }),
     new webpack.optimize.UglifyJsPlugin({
       compressor: {
         warnings: false
@@ -33,17 +36,20 @@ module.exports = {
     Buffer: false
   },
   module: {
-    loaders: [{
-      test: /\.js$/,
-      loaders: ['babel-loader'],
-      include: [path.join(process.cwd()), path.join(process.cwd(), 'pages')]
-    }, {
-      test: /\.json$/,
-      loader: 'json-loader'
-    }, {
-      test: /\.md$/,
-      loader: 'raw-loader'
-    }]
+    loaders: [
+      {
+        test: /\.js$/,
+        loaders: ["babel-loader"],
+        include: [path.join(process.cwd(), "js")]
+      },
+      {
+        test: /\.json$/,
+        loader: "json-loader"
+      },
+      {
+        test: /\.md$/,
+        loader: "raw-loader"
+      }
+    ]
   }
-
 };

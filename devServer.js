@@ -1,48 +1,85 @@
 #!/usr/bin/env node
 
-var koa = require('koa');
+var koa = require("koa");
 var app = koa();
-var serveViews = require('koa-front-matter-views');
-var serve = require('koa-static');
-var accesslog = require('koa-accesslog');
-var moment = require('moment')
+var serveViews = require("koa-front-matter-views");
+var serve = require("koa-static");
+var accesslog = require("koa-accesslog");
+var moment = require("moment");
+var path = require("path");
+var cwd = process.cwd();
+var { inspect } = require("util");
 
 app.use(accesslog());
 
-var webpack = require('webpack');
-var webpackConfig = require('./webpack.config.dev.js');
-var compiler = webpack(webpackConfig);
+var webpack = require("webpack");
+var webpackConfig = require("./webpack.config.dev.js");
+var combinedConfig = webpackConfig;
+var localWebpackConfig = {};
+try {
+  var localWebpackConfig = require(path.join(cwd, "webpack.config.js"));
+  combinedConfig = Object.assign({}, webpackConfig, {
+    devtool: localWebpackConfig.devtool || webpackConfig.devtool,
+    entry: Object.assign({}, webpackConfig.entry, localWebpackConfig.entry),
+    output: Object.assign({}, webpackConfig.output, localWebpackConfig.output),
+    // plugins: webpackConfig.plugins.concat(localWebpackConfig.plugins),
+    module: {
+      loaders: webpackConfig.module.loaders.concat(
+        localWebpackConfig.module.loaders
+      )
+    }
+  });
+} catch (e) {
+  console.log("error", e);
+  localWebpackConfig = {};
+}
+
+console.log("DEFAULT WEBPACK CONFIG");
+console.log(webpackConfig);
+console.log("CUSTOM WEBPACK CONFIG");
+console.log(localWebpackConfig);
+console.log("COMBINED WEBPACK CONFIG");
+console.log(JSON.stringify(combinedConfig, null, 4));
+
+var compiler = webpack(combinedConfig);
 var hotMiddleware = require("webpack-hot-middleware")(compiler);
 
 var webpackMiddleware = require("koa-webpack-dev-middleware");
 
-app.use(webpackMiddleware(compiler, {
-  noInfo: false,
-  lazy: false,
-  publicPath: webpackConfig.output.publicPath
-}))
+app.use(
+  webpackMiddleware(compiler, {
+    noInfo: false,
+    lazy: false,
+    publicPath: combinedConfig.output.publicPath
+  })
+);
 
-app.use(function* (next) {
+app.use(function*(next) {
   yield hotMiddleware.bind(null, this.req, this.res);
   yield next;
 });
 
 // serve generate pages
-app.use(serveViews({ defaults: {
-  pages: process.cwd() + '/pages',
-  layouts: process.cwd() + '/layouts',
-  __DEV__: true,
-  __ts__: moment().format('YYYY-MM-DD'),
-  __version__: require(process.cwd() + '/package.json').version
-}}))
+app.use(
+  serveViews({
+    defaults: {
+      __DEV__: true,
+      __ts__: moment().format("YYYY-MM-DD"),
+      __version__: require(path.join(cwd, "package.json")).version
+    }
+  })
+);
 
 // serve static assets
-app.use(serve(process.cwd()));
+app.use(serve(cwd));
 
 // serve the index.html page
-app.use(function *(){
-  yield this.serveView('index')
-})
+app.use(function*() {
+  yield this.serveView("index");
+});
 
-app.listen(process.env.PORT||3000, process.env.BIND_IP);
-console.log(`Listening on ${process.env.BIND_IP||'localhost'}:${process.env.PORT||3000}`)
+app.listen(process.env.PORT || 3000, process.env.BIND_IP);
+console.log(
+  `Listening on ${process.env.BIND_IP || "localhost"}:${process.env.PORT ||
+    3000}`
+);
