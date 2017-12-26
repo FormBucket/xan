@@ -1,33 +1,20 @@
-var Metalsmith  = require('metalsmith')
-var markdown    = require('metalsmith-remarkable')
-var layouts     = require('metalsmith-layouts')
-var inPlace     = require('metalsmith-in-place')
-var permalinks  = require('metalsmith-permalinks')
-var hljs        = require('highlight.js')
-var moment      = require('moment')
-var path        = require('path')
+var exec = require("child_process").exec;
+var path = require("path");
 
-let createNewSite = ({name, description}) => {
+let createNewSite = ({ name, description }) => {
+  var start = new Date();
+  let templateDir = path.join(__dirname, "/default-site");
+  let cwd = path.join(process.cwd(), name);
 
-  console.log(__dirname)
+  console.log(templateDir, cwd);
+  exec(`cp -r ${templateDir} ${cwd}`, function(error, stdout, stderr) {
+    // command output is in stdout
+    if (error) {
+      console.log("COPY ERROR:", error, stderr);
+    }
 
-  var s = new Date()
-  console.log('Metalsmith go')
-  Metalsmith(process.cwd())
-    .metadata({
-      name,
-      description
-    })
-    .source( path.join( __dirname, '/default-site') )
-    .destination(path.join(process.cwd(), name))
-    .clean(false)
-    .use(inPlace({
-      engine: 'handlebars'
-    }))
-    .build(function(err, files) {
-      if (err) { throw err; }
-    });
-
-}
+    console.log(stdout);
+  });
+};
 
 module.exports = createNewSite;

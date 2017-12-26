@@ -1,6 +1,6 @@
 {
   "name": "xan",
-  "version": "0.23.0",
+  "version": "0.24.0",
   "description": "Build tool for xander.",
   "main": "index.js",
   "scripts": {

@@ -8,31 +8,44 @@ var accesslog = require("koa-accesslog");
 var moment = require("moment");
 var path = require("path");
 var cwd = process.cwd();
+var layouts = path.join(cwd, 'layouts');
+var pages = path.join(cwd, 'pages');
+var version = require(path.join(cwd, "package.json")).version;
+
 var { inspect } = require("util");
 
+console.log('current working directory: ', cwd, layouts, pages, version)
 app.use(accesslog());
 
+let webpackEnabled = true;
+
 var webpack = require("webpack");
-var webpackConfig = require("./webpack.config.dev.js");
-var combinedConfig = webpackConfig;
+var webpackConfig = combinedConfig = require("./webpack.config.dev.js");
+
 var localWebpackConfig = {};
-try {
-  var localWebpackConfig = require(path.join(cwd, "webpack.config.js"));
-  combinedConfig = Object.assign({}, webpackConfig, {
-    devtool: localWebpackConfig.devtool || webpackConfig.devtool,
-    entry: Object.assign({}, webpackConfig.entry, localWebpackConfig.entry),
-    output: Object.assign({}, webpackConfig.output, localWebpackConfig.output),
-    // plugins: webpackConfig.plugins.concat(localWebpackConfig.plugins),
-    module: {
-      loaders: webpackConfig.module.loaders.concat(
-        localWebpackConfig.module.loaders
-      )
-    }
-  });
-} catch (e) {
-  console.log("error", e);
-  localWebpackConfig = {};
+
+let combineWebpack = (name) => {
+  try {
+    var localWebpackConfig = require(path.join(cwd, name));
+    combinedConfig = Object.assign({}, webpackConfig, {
+      devtool: localWebpackConfig.devtool || webpackConfig.devtool,
+      entry: Object.assign({}, webpackConfig.entry, localWebpackConfig.entry),
+      output: Object.assign({}, webpackConfig.output, localWebpackConfig.output),
+      // plugins: webpackConfig.plugins.concat(localWebpackConfig.plugins),
+      module: {
+        loaders: webpackConfig.module.loaders.concat(
+          localWebpackConfig.module.loaders
+        )
+      }
+    });
+  } catch (e) {
+    console.log("unable to configure with file: ", name);
+    localWebpackConfig = {};
+  }
 }
+
+combineWebpack('.xanrc');
+combineWebpack('webpack.config.js');
 
 console.log("DEFAULT WEBPACK CONFIG");
 console.log(webpackConfig);
@@ -59,13 +72,18 @@ app.use(function*(next) {
   yield next;
 });
 
+console.log(typeof cwd, cwd)
 // serve generate pages
 app.use(
   serveViews({
+    layouts,
+    pages,
     defaults: {
+      layouts,
+      pages,
       __DEV__: true,
       __ts__: moment().format("YYYY-MM-DD"),
-      __version__: require(path.join(cwd, "package.json")).version
+      __version__: version
     }
   })
 );
