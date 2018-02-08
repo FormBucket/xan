@@ -1,6 +1,6 @@
 {
   "name": "xan",
-  "version": "0.24.1",
+  "version": "0.25.0",
   "description": "Build tool for xander.",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/formula/xan.git"
+    "url": "git+https://github.com/FormBucket/xan.git"
   },
   "keywords": [
     "react",
@@ -29,7 +29,7 @@
     "xan": "./index.js"
   },
   "bugs": {
-    "url": "https://github.com/formula/xan/issues"
+    "url": "https://github.com/FormBucket/xan/issues"
   },
   "homepage": "https://github.com/formula/xan",
   "dependencies": {
