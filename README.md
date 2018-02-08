@@ -17,6 +17,7 @@ xan new my-app
 cd my-app
 npm i
 xan server
+xan build
 ```
 
 ## License
