@@ -7,7 +7,7 @@ program
   .version(require('./package.json').version)
 
 // Run Server Command
-// usage: xan new :name 
+// usage: xan new :name
 program
     .command('new [name]')
     .description('Create new app')
@@ -56,17 +56,20 @@ program
       console.log('Metalsmith end', (new Date() - s) + 'ms')
     });
 
-    console.log('Webpack start')
-    exec(`webpack --config ${__dirname}/webpack.config.prod.js`, function(error, stdout, stderr) {
-      if (error) {
-        console.log('Webpack error:', error)
-      }
+    let {webpack, config} = require('./createWebpackCompiler');
 
-      // command output is in stdout
-      console.log('Weback end', (new Date() - s) + 'ms')
-      console.log(stdout, stderr)
+    console.log('Webpack start')
+    webpack(config, (err, stats) => {
+      if (err || stats.hasErrors()) {
+        // Handle errors here
+        console.log('Error:', err, stats)
+      }
+      console.log(stats.toString({
+        chunks: false,  // Makes the build much quieter
+        colors: true    // Shows colors in the console
+      }));
     });
-  });11
+  });
 
 
 

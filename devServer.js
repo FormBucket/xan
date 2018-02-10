@@ -19,43 +19,9 @@ app.use(accesslog());
 
 let webpackEnabled = true;
 
-var webpack = require("webpack");
-var webpackConfig = combinedConfig = require("./webpack.config.dev.js");
+let {compiler} = require('./createWebpackCompiler');
 
-var localWebpackConfig = {};
-
-let combineWebpack = (name) => {
-  try {
-    var localWebpackConfig = require(path.join(cwd, name));
-    combinedConfig = Object.assign({}, webpackConfig, {
-      devtool: localWebpackConfig.devtool || webpackConfig.devtool,
-      entry: Object.assign({}, webpackConfig.entry, localWebpackConfig.entry),
-      output: Object.assign({}, webpackConfig.output, localWebpackConfig.output),
-      // plugins: webpackConfig.plugins.concat(localWebpackConfig.plugins),
-      module: {
-        loaders: webpackConfig.module.loaders.concat(
-          localWebpackConfig.module.loaders
-        )
-      }
-    });
-  } catch (e) {
-    console.log("unable to configure with file: ", name);
-    localWebpackConfig = {};
-  }
-}
-
-combineWebpack('.xanrc');
-combineWebpack('webpack.config.js');
-
-console.log("DEFAULT WEBPACK CONFIG");
-console.log(webpackConfig);
-console.log("CUSTOM WEBPACK CONFIG");
-console.log(localWebpackConfig);
-console.log("COMBINED WEBPACK CONFIG");
-console.log(JSON.stringify(combinedConfig, null, 4));
-
-var compiler = webpack(combinedConfig);
-var hotMiddleware = require("webpack-hot-middleware")(compiler);
+let hotMiddleware = require("webpack-hot-middleware")(compiler);
 
 var webpackMiddleware = require("koa-webpack-dev-middleware");
 
