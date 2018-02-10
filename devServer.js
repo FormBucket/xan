@@ -19,7 +19,8 @@ app.use(accesslog());
 
 let webpackEnabled = true;
 
-let {compiler} = require('./createWebpackCompiler');
+let {create} = require('./createWebpackCompiler');
+let {compiler, config} = create('dev', 'webpack.config.js')
 
 let hotMiddleware = require("webpack-hot-middleware")(compiler);
 
@@ -29,7 +30,7 @@ app.use(
   webpackMiddleware(compiler, {
     noInfo: false,
     lazy: false,
-    publicPath: combinedConfig.output.publicPath
+    publicPath: config.output.publicPath
   })
 );
 

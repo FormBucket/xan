@@ -1,12 +1,19 @@
+// create the webpack, compiler and config objects.
+var cwd = process.cwd();
+var path = require('path');
 var webpack = require("webpack");
-var webpackConfig = (combinedConfig = require("./webpack.config.dev.js"));
 
-var localWebpackConfig = {};
-
-let combineWebpack = name => {
+let combineWebpack = (env, name) => {
   try {
+
+   console.log('cwd', cwd, env, name, path.join(cwd, name))
+    var webpackConfig = require("./webpack.config." +
+      env +
+      ".js");
+
     var localWebpackConfig = require(path.join(cwd, name));
-    combinedConfig = Object.assign({}, webpackConfig, {
+
+    var combinedConfig = Object.assign({}, webpackConfig, {
       devtool: localWebpackConfig.devtool || webpackConfig.devtool,
       entry: Object.assign({}, webpackConfig.entry, localWebpackConfig.entry),
       output: Object.assign(
@@ -21,24 +28,16 @@ let combineWebpack = name => {
         )
       }
     });
+
+    return {
+      config: combinedConfig,
+      compiler: webpack(combinedConfig)
+    };
   } catch (e) {
-    console.log("unable to configure with file: ", name);
+    console.log("unable to configure with file: ", name, e);
     localWebpackConfig = {};
   }
 };
 
-combineWebpack(".xanrc");
-combineWebpack("webpack.config.js");
-
-if (process.env.NODE_ENV === "development") {
-  console.log("DEFAULT WEBPACK CONFIG");
-  console.log(webpackConfig);
-  console.log("CUSTOM WEBPACK CONFIG");
-  console.log(localWebpackConfig);
-  console.log("COMBINED WEBPACK CONFIG");
-  console.log(JSON.stringify(combinedConfig, null, 4));
-}
-
-exports.config = combinedConfig;
 exports.webpack = webpack;
-exports.compiler = webpack(combinedConfig);
+exports.create = combineWebpack;

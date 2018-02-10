@@ -56,7 +56,8 @@ program
       console.log('Metalsmith end', (new Date() - s) + 'ms')
     });
 
-    let {webpack, config} = require('./createWebpackCompiler');
+    let {webpack, create } = require('./createWebpackCompiler');
+    let config = create('prod', "webpack.config.js").config;
 
     console.log('Webpack start')
     webpack(config, (err, stats) => {
