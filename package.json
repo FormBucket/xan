@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/formula/xan.git"
+    "url": "git+https://github.com/FormBucket/xan.git"
   },
   "keywords": [
     "react",
@@ -29,7 +29,7 @@
     "xan": "./index.js"
   },
   "bugs": {
-    "url": "https://github.com/formula/xan/issues"
+    "url": "https://github.com/FormBucket/xan/issues"
   },
   "homepage": "https://github.com/formula/xan",
   "dependencies": {
