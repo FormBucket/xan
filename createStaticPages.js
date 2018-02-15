@@ -1,13 +1,13 @@
-var Metalsmith  = require('metalsmith')
-var markdown    = require('metalsmith-remarkable')
-var layouts     = require('metalsmith-layouts')
-var inPlace     = require('metalsmith-in-place')
-var permalinks  = require('metalsmith-permalinks')
-var hljs        = require('highlight.js')
-var moment      = require('moment')
+var Metalsmith = require("metalsmith");
+var markdown = require("metalsmith-markdown");
+var layouts = require("metalsmith-layouts");
+var inPlace = require("metalsmith-in-place");
+var permalinks = require("metalsmith-permalinks");
+var hljs = require("highlight.js");
+var moment = require("moment");
 
-var s = new Date()
-console.log('Metalsmith go')
+var s = new Date();
+console.log("Metalsmith go");
 Metalsmith(process.cwd())
   .metadata({
     title: "My Static Site & Blog",
@@ -17,25 +17,33 @@ Metalsmith(process.cwd())
     __PROD__: true,
     __ts__: moment().format("YYYY-MM-DD")
   })
-  .source('./pages')
-  .destination('./public')
+  .source("./pages")
+  .destination("./public")
   .clean(false)
-  .use(markdown({
-    html: true,
-    highlight: function (str, lang) {
-      try {
-        return hljs.highlightAuto(str).value;
-      } catch (err) {}
-    }
-  }))
+  .use(
+    markdown({
+      html: true,
+      highlight: function(str, lang) {
+        try {
+          return hljs.highlightAuto(str).value;
+        } catch (err) {}
+      }
+    })
+  )
   .use(permalinks())
-  .use(layouts({
-    engine: 'handlebars'
-  }))
-  .use(inPlace({
-    engine: 'handlebars'
-  }))
+  .use(
+    layouts({
+      engine: "handlebars"
+    })
+  )
+  .use(
+    inPlace({
+      engine: "handlebars"
+    })
+  )
   .build(function(err, files) {
-    if (err) { throw err; }
+    if (err) {
+      throw err;
+    }
   });
-console.log('Metalsmith out in', (new Date() - s) + 'ms')
+console.log("Metalsmith out in", new Date() - s + "ms");
