@@ -9,7 +9,7 @@
   "dependencies": {
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "xan": "^0.24.1",
-    "xander": "^0.8.2"
+    "xan": "^0.26.0",
+    "xander": "^0.10.0"
   }
 }
