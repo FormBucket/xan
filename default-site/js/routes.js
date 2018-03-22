@@ -4,6 +4,10 @@ let routes = [
     load: () => System.import("./home")
   },
   {
+    path: "/rules",
+    load: () => System.import("./rules")
+  },
+  {
     path: "*",
     component: props => "No Page Found"
   }

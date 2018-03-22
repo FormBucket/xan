@@ -20,7 +20,7 @@ app.use(accesslog());
 let webpackEnabled = true;
 
 let {create} = require('./createWebpackCompiler');
-let {compiler, config} = create('dev', 'webpack.config.js')
+let {compiler, config} = create('webpack.config.js')
 
 let hotMiddleware = require("webpack-hot-middleware")(compiler);
 

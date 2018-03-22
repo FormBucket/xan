@@ -1,17 +1,18 @@
 // create the webpack, compiler and config objects.
 var cwd = process.cwd();
-var path = require('path');
+var path = require("path");
 var webpack = require("webpack");
 
-let combineWebpack = (env, name) => {
+let combineWebpack = name => {
   try {
-
-   console.log('cwd', cwd, env, name, path.join(cwd, name))
     var webpackConfig = require("./webpack.config." +
-      env +
+      (process.env.NODE_ENV || "dev") +
       ".js");
 
-    var localWebpackConfig = require(path.join(cwd, name));
+    var localWebpackConfig = { module: { loaders: [] } };
+    try {
+      localWebpackConfig = require(path.join(cwd, name));
+    } catch (e) {}
 
     var combinedConfig = Object.assign({}, webpackConfig, {
       devtool: localWebpackConfig.devtool || webpackConfig.devtool,
@@ -29,6 +30,7 @@ let combineWebpack = (env, name) => {
       }
     });
 
+    console.log("cwd", combinedConfig);
     return {
       config: combinedConfig,
       compiler: webpack(combinedConfig)
