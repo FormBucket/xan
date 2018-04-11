@@ -6,10 +6,10 @@ var webpack = require("webpack");
 let combineWebpack = name => {
   try {
     var webpackConfig = require("./webpack.config." +
-      (process.env.NODE_ENV || "dev") +
+      (process.env.NODE_ENV === "production" ? "prod" : "dev") +
       ".js");
 
-    var localWebpackConfig = { module: { loaders: [] } };
+    var localWebpackConfig = { module: { rules: [] } };
     try {
       localWebpackConfig = require(path.join(cwd, name));
     } catch (e) {}
@@ -24,8 +24,8 @@ let combineWebpack = name => {
       ),
       // plugins: webpackConfig.plugins.concat(localWebpackConfig.plugins),
       module: {
-        loaders: webpackConfig.module.loaders.concat(
-          localWebpackConfig.module.loaders
+        rules: webpackConfig.module.rules.concat(
+          localWebpackConfig.module.rules
         )
       }
     });

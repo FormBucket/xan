@@ -1,11 +1,9 @@
+import HomePage from "./home";
+
 let routes = [
   {
     path: "/",
-    load: () => System.import("./home")
-  },
-  {
-    path: "/rules",
-    load: () => System.import("./rules")
+    component: HomePage
   },
   {
     path: "*",

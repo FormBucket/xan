@@ -4,7 +4,6 @@ var { version, vendor } = require(path.join(process.cwd(), "package.json"));
 var fs = require("fs");
 var serverDir = path.dirname(fs.realpathSync(__filename));
 let load = module => [path.join(process.cwd(), "js", module)];
-
 module.exports = {
   devtool: "source-map",
   entry: {

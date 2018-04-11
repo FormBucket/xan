@@ -10,6 +10,7 @@ console.log("configure webpack", serverDir);
 
 module.exports = {
   devtool: "eval",
+  mode: "development",
   entry: {
     vendor: ["react", "react-dom"],
     app: load("app")
@@ -19,28 +20,21 @@ module.exports = {
     filename: "[name].js",
     publicPath: "/js/"
   },
-  plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: "vendor",
-      filename: "vendor.bundle.js"
-    }),
-    new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
-  ],
+  plugins: [new webpack.HotModuleReplacementPlugin()],
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.js$/,
-        loaders: ["babel-loader"],
+        use: ["babel-loader"],
         include: [path.join(process.cwd(), "js")]
       },
       {
         test: /\.json$/,
-        loader: "json-loader"
+        use: ["json-loader"]
       },
       {
         test: /\.md$/,
-        loader: "raw-loader"
+        use: ["raw-loader"]
       }
     ]
   }
