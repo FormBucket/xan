@@ -1,9 +1,4 @@
-import { loadable } from "hrx";
-
-let loader = loader =>
-  loadable({
-    loader
-  });
+import { loader } from "hrx";
 
 let routes = [
   {
