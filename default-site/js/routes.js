@@ -1,13 +1,18 @@
-import HomePage from "./home";
+import { loadable } from "hrx";
+
+let loader = loader =>
+  loadable({
+    loader
+  });
 
 let routes = [
   {
     path: "/",
-    component: HomePage
+    component: loader(() => import('./home'))
   },
   {
     path: "*",
-    component: props => "No Page Found"
+    component: loader(() => import('./404')) // page not found
   }
 ];
 

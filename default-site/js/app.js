@@ -1,11 +1,9 @@
-import {boot} from 'xander';
-import routes from './routes';
-
-let debug = process.env.NODE_ENV !== 'production';
-let rootEl = document.getElementById('root');
+import { boot } from "hrx";
+import routes from "./routes";
+let { NODE_ENV } = process.env;
 
 boot({
-    rootEl,
-    debug,
-    routes
+  rootEl: document.getElementById("root"),
+  debug: NODE_ENV !== "production",
+  routes
 });

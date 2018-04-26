@@ -30,7 +30,7 @@ let combineWebpack = name => {
       }
     });
 
-    console.log("cwd", combinedConfig);
+    // console.log("cwd", combinedConfig);
     return {
       config: combinedConfig,
       compiler: webpack(combinedConfig)

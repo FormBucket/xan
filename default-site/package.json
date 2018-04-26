@@ -6,16 +6,16 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies" :{
+  "devDependencies": {
     "css-loader": "^0.28.7",
     "node-sass": "^4.7.2",
     "sass-loader": "^6.0.6",
-    "style-loader": "^0.19.0"
+    "style-loader": "^0.19.0",
+    "xan": "^0.28.1"
   },
   "dependencies": {
+    "hrx": "^0.1.1",
     "react": "^16.2.0",
-    "react-dom": "^16.2.0",
-    "xan": "^0.27.0",
-    "xander": "^0.11.0"
+    "react-dom": "^16.2.0"
   }
 }

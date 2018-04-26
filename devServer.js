@@ -14,7 +14,7 @@ var version = require(path.join(cwd, "package.json")).version;
 
 var { inspect } = require("util");
 
-console.log('current working directory: ', cwd, layouts, pages, version)
+// console.log('current working directory: ', cwd, layouts, pages, version)
 app.use(accesslog());
 
 let webpackEnabled = true;
@@ -39,7 +39,7 @@ app.use(function*(next) {
   yield next;
 });
 
-console.log(typeof cwd, cwd)
+// console.log(typeof cwd, cwd)
 // serve generate pages
 app.use(
   serveViews({
